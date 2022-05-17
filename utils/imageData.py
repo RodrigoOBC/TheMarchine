@@ -52,9 +52,12 @@ class Image_father:
             except:
                 print(f'Erro na imagem {src_path}')
 
+    def load_face(self,filename):
+        pass
 
 class WebCam(Image_father):
     def __init__(self, video=0):
+        super().__init__()
         self.cap = None
         self.video = video
         self.FILE_SAVE_PATH = 'data/fotos_webcam/'
@@ -99,3 +102,9 @@ class Photo(Image_father):
             if not path.isdir(file_path):
                 continue
             self.save_fotos(file_path, path_target)
+
+    def load_face(self, filename):
+        img = Image.open(filename)
+        img = img.convert("RGB")
+
+        return asarray(img)
