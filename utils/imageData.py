@@ -77,12 +77,16 @@ class WebCam(Image_father):
         cv2.destroyAllWindows()
         cv2.waitKey(1)
 
-    def save_frame(self, path_target):
+    def save_frame(self, path_target, filename):
         frame = self.capture_webcam()
         path_temp = r'data/fotos/fotos_webcam/foto_temp.jpeg'
         cv2.imwrite(path_temp, frame)
         frame_face = self.extrair_face(path_temp)
-        frame_face.save(path_target, "JPEG", quality=100, optimize=True, progressive=True)
+        frame_face.save(fr'{path_target}/{filename}.jpeg', "JPEG", quality=100, optimize=True, progressive=True)
+        flip_face = self.flip_image(frame_face)
+        flip_face.save(fr'{path_target}/{filename}-flip.jpeg', "JPEG", quality=100, optimize=True, progressive=True)
+        rotate_face = self.rotate_90(frame_face)
+        rotate_face.save(fr'{path_target}/{filename}-rotate.jpeg', "JPEG", quality=100, optimize=True, progressive=True)
         print(path_target)
         remove(path_temp)
 
