@@ -1,6 +1,6 @@
-from utils.imageData import Photo
+from utils.imageData import Photo,WebCam
 
 
 if __name__ == '__main__':
-    Foto = Photo(r'data/fotos/', r'data/faces/')
-    Foto.load_dir()
+    Foto = WebCam()
+    Foto.save_frame('data/faces/fotos_webcam/fototeste.jpeg')

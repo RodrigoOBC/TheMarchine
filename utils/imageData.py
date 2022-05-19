@@ -1,4 +1,4 @@
-from os import path, listdir
+from os import path, listdir, remove
 import cv2
 from PIL import Image
 from numpy import asarray
@@ -52,8 +52,6 @@ class Image_father:
             except:
                 print(f'Erro na imagem {src_path}')
 
-    def load_face(self,filename):
-        pass
 
 class WebCam(Image_father):
     def __init__(self, video=0):
@@ -79,13 +77,14 @@ class WebCam(Image_father):
         cv2.destroyAllWindows()
         cv2.waitKey(1)
 
-    def save_frame(self, frame=''):
+    def save_frame(self, path_target):
         frame = self.capture_webcam()
-        cv2.imwrite(r"data/fotos_webcam/teste.jpg", frame)
-        print('teste')
-
-    def save_fotos(self, file_path='data/fotos_webcam/', path_target=''):
-        pass
+        path_temp = r'data/fotos/fotos_webcam/foto_temp.jpeg'
+        cv2.imwrite(path_temp, frame)
+        frame_face = self.extrair_face(path_temp)
+        frame_face.save(path_target, "JPEG", quality=100, optimize=True, progressive=True)
+        print(path_target)
+        remove(path_temp)
 
 
 class Photo(Image_father):
